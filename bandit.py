@@ -4,7 +4,7 @@ class Bandit:
     """_summary_
     """
     def __init__(self, num_actions=10):
-        """_summary_
+        """Constructor of the class.
 
         Args:
             num_actions (int, optional): _description_. Defaults to 10.
@@ -19,8 +19,8 @@ class Bandit:
         variance. (pg 28)
 
         Args:
-            mean (int, optional): _description_. Defaults to 0.
-            standard_deviation (int, optional): _description_. Defaults to 1.
+            mean (int, optional): Defaults to 0.
+            standard_deviation (int, optional): Defaults to 1.
         """
         for a in range(self.num_actions):
             self.true_value_actions[a] = np.random.normal(mean, standard_deviation)
@@ -30,10 +30,10 @@ class Bandit:
         q*(a), for each action 'a', and unit variance. (pg 28)
 
         Args:
-            true_value_actions (_type_): _description_
+            true_value_actions (_type_): Actual q*, true value of action.
         """
+
         for a in range(self.num_actions):
-            #print(f"Reward {a} based off true value q*({a}) = {true_value_actions[a]}")
             self.rewards[a] = np.random.normal(true_value_actions[a], 1)
 
     def get_action_values(self) -> np.ndarray:
@@ -41,7 +41,7 @@ class Bandit:
         which were defined by 'fill_true_action_values'.
 
         Returns:
-            _type_: _description_
+            np.ndarray: True action values q* for the bandit.
         """
         return self.true_value_actions
 
@@ -50,6 +50,6 @@ class Bandit:
         by method 'fill_reward_values'
 
         Returns:
-            _type_: _description_
+            np.ndarray: Reward values based off q*.
         """
         return self.rewards

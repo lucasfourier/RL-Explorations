@@ -4,43 +4,44 @@ import matplotlib.pyplot as plt
 from agent import Agent
 from bandit import Bandit
 
-
-# Criar uma máquina com número n de arms.
+# Creating a bandit with 'n' levers.
 
 number_of_arms = 10
 bandit = Bandit(number_of_arms)
 
-# Preencher q*(a), para cada 'a'. Intrínsico, não muda.
-# Lembrando que: q*(a) = True value of an action.
+# Filling/computing q*(a), for each 'a'. Bandit Intrinsic.
+# Remember that: q*(a) = True value of an action.
 
 bandit.fill_true_action_values(0, 1)
 q_star = bandit.get_action_values()
 
-# Preencher as rewards de cada ação. 
+# Filling/computing rewards of each action. 
 
 bandit.fill_reward_values(q_star)
 rewards = bandit.get_reward_values()
 
-# Estimativas e vetores de contagem iniciais (inicialização)
+# ndarrays to keep Q_estimates and action_count.
 
 Q_estimates = np.zeros(number_of_arms)
 action_count = np.zeros(number_of_arms)
 
-# Inicializar as ações
+# Initializing actions. 
+# Here, any action is a candidate.
 
 candidate_action = np.argmax(Q_estimates)
 
-# Action guarda os índices nos quais Q_(.) é máximo.
+# 'action' keeps the indexes where Q_(.) is maximum.
 
 action = np.where(Q_estimates == Q_estimates[candidate_action])[0]
-#print(f"Ações onde Q é máximo = {action}")
+#print(f"Actions such that Q is max = {action}")
 
 # Alguns parâmetros da ação
 
 epsilon = 0.1
 steps = 2000
 
-# Um último vetor para guardar as recompensas recebidas em cada passo.
+# Vector to keep cumulative rewards. Updated each step.
+
 cumulative_rewards_received = np.zeros(number_of_arms)
 
 # Just to count the number of times it exploited/explored.
