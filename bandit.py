@@ -25,12 +25,12 @@ class Bandit:
         for a in range(self.num_actions):
             self.true_value_actions[a] = np.random.normal(mean, standard_deviation)
 
-    def fill_reward_values(self, true_value_actions) -> None:
+    def fill_reward_values(self, true_value_actions: np.ndarray) -> None:
         """Actual rewards were selected according to a mean
         q*(a), for each action 'a', and unit variance. (pg 28)
 
         Args:
-            true_value_actions (_type_): Actual q*, true value of action.
+            true_value_actions (np.ndarray): Actual q*, true value of action.
         """
 
         for a in range(self.num_actions):
