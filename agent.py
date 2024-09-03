@@ -3,30 +3,28 @@ import numpy as np
 class Agent:
     """
     """
-    def __init__(self, num_estimates = 10):
+    def __init__(self, num_actions = 10, epsilon = 0.1, steps = 2000):
         """_summary_
 
         Args:
             num_estimates (int, optional): _description_. Defaults to 10.
         """
-        self.estimates = np.zeros(num_estimates)
-        self.estimate_action_values = np.zeros(num_estimates)
-        self.action_counts = np.zeros(num_estimates)
+        self.q_estimates = np.zeros(num_actions)
+        self.action_count = np.zeros(num_actions)
+        self.cumulative_rewards_received = np.zeros(num_actions)
+        self.epsilon = epsilon
 
-    def naive_q_estimate(self, rewards) -> np.ndarray:
-        """_summary_
-
-        Args:
-            rewards (_type_): _description_
-
-        Returns:
-            np.ndarray: _description_
-        """
-        for a in range(len(rewards)):
-
-            self.action_counts[a] += 1
-            n = self.action_counts[a]
-            self.estimates[a] += (1 / n) * (rewards[a] - self.estimates[a])
-
-        return self.estimates
-
+    def get_Q_estimates(self):
+        return self.q_estimates
+    
+    def get_action_count(self):
+        return self.action_count
+    
+    def get_cumulative_rewards(self):
+        return self.cumulative_rewards_received
+    
+    def compute_index_candidate_action(self, Q_estimates):
+        return np.argmax(Q_estimates)
+        
+    def compute_argmax_actions(self, Q_estimates):
+        return np.where(Q_estimates == Q_estimates[self.compute_index_candidate_action(Q_estimates)])[0]

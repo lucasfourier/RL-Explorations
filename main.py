@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from agent import Agent
 from bandit import Bandit
 
-# Creating a bandit with 'n' levers.
+# Creating a bandit with 'n' arms/levers.
 
 number_of_arms = 10
 bandit = Bandit(number_of_arms)
@@ -20,29 +20,31 @@ q_star = bandit.get_action_values()
 bandit.fill_reward_values(q_star)
 rewards = bandit.get_reward_values()
 
-# ndarrays to keep Q_estimates and action_count.
+### Prototype
+agent = Agent(num_actions=10, epsilon=0.1, steps = 2000)
 
-Q_estimates = np.zeros(number_of_arms)
-action_count = np.zeros(number_of_arms)
+# ndarrays to keep Q_estimates and action_count.
+Q_estimates = agent.get_Q_estimates()
+action_count = agent.get_action_count()
 
 # Initializing actions. 
 # Here, any action is a candidate.
-
-candidate_action = np.argmax(Q_estimates)
+candidate_action = agent.compute_index_candidate_action(Q_estimates)
 
 # 'action' keeps the indexes where Q_(.) is maximum.
-
-action = np.where(Q_estimates == Q_estimates[candidate_action])[0]
+action = agent.compute_argmax_actions(Q_estimates)
 #print(f"Actions such that Q is max = {action}")
 
-# Alguns parâmetros da ação
+# Vector to keep cumulative rewards. Updated each step.
+cumulative_rewards_received = agent.get_cumulative_rewards()
+
+### Prototype
+
+# Some parameters
 
 epsilon = 0.1
 steps = 2000
 
-# Vector to keep cumulative rewards. Updated each step.
-
-cumulative_rewards_received = np.zeros(number_of_arms)
 
 # Just to count the number of times it exploited/explored.
 
@@ -85,6 +87,3 @@ print(f"(Average) Cumulative reward = {cumulative_rewards_received/steps}")
 print(f"action count = {action_count}")
 print(f"Exploited {exploiting} and explored {exploring}")
 print(f"Average reward = {np.sum(cumulative_rewards_received)/steps:.3f}")
-
-
-
