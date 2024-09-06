@@ -52,43 +52,57 @@ exploring = agent.get_exploring_count()
 exploiting = agent.get_exploit_count()
 
 ####Prototype
-#
+for i in range(2000):
+    bandit.fill_reward_values(q_star)
+    rewards = bandit.get_reward_values()
+
+    agent.action_method("epsilon-greedy", epsilon, number_of_arms, rewards)
+
+print("END")
+print(f"Q = {agent.get_Q_estimates()}")
+print(f"True values = {q_star}")
+print(f"(Average) Cumulative reward = {agent.get_cumulative_rewards()/2000}")
+print(f"action count = {agent.get_action_count()}")
+print(f"Exploited {agent.get_exploit_count()} and explored {agent.get_exploring_count()}")
+print(f"Average reward = {np.sum(agent.get_cumulative_rewards())/2000:.3f}")
+
 
 ###
 
-for i in range(steps):
-    # Play!
-    # Rewards are updated each time.
-    #print(f"Iteration {i}")
-    bandit.fill_reward_values(q_star)
-    rewards = bandit.get_reward_values()
+#TOBEDEPRECATED (TBD)
+# for i in range(steps):
+#     # Play!
+#     # Rewards are updated each time.
+#     #print(f"Iteration {i}")
+#     bandit.fill_reward_values(q_star)
+#     rewards = bandit.get_reward_values()
     
-    if np.random.random() < epsilon:
-        #print(f"-> epsilon-greedy. Exploring.")
-        A = np.random.choice(number_of_arms)
-        #print(f"Chose action {A} => reward = {rewards[A]}")
-        cumulative_rewards_received[A] = cumulative_rewards_received[A] + rewards[A]
-        action_count[A] = action_count[A] + 1
-        Q_estimates[A] = Q_estimates[A] + (1/action_count[A]) * (rewards[A] - Q_estimates[A])
-        exploring = exploring + 1
+#     if np.random.random() < epsilon:
+#         #print(f"-> epsilon-greedy. Exploring.")
+#         A = np.random.choice(number_of_arms)
+#         #print(f"Chose action {A} => reward = {rewards[A]}")
+#         cumulative_rewards_received[A] = cumulative_rewards_received[A] + rewards[A]
+#         action_count[A] = action_count[A] + 1
+#         Q_estimates[A] = Q_estimates[A] + (1/action_count[A]) * (rewards[A] - Q_estimates[A])
+#         exploring = exploring + 1
 
-    else:
-        #print(f"-> Greedy. Exploiting.")
-        candidate_action = np.argmax(Q_estimates)
-        action_candidate_array = np.where(Q_estimates == Q_estimates[candidate_action])[0]
+#     else:
+#         #print(f"-> Greedy. Exploiting.")
+#         candidate_action = np.argmax(Q_estimates)
+#         action_candidate_array = np.where(Q_estimates == Q_estimates[candidate_action])[0]
 
-        # If multiple values with same action value, random choice.
-        A = np.random.choice(action_candidate_array)
-        #print(f"Chose action {A} => reward = {rewards[A]}")
-        cumulative_rewards_received[A] = cumulative_rewards_received[A] + rewards[A]
-        action_count[A] = action_count[A] + 1
-        Q_estimates[A] = Q_estimates[A] + (1/action_count[A]) * (rewards[A] - Q_estimates[A])
-        exploiting = exploiting + 1
+#         # If multiple values with same action value, random choice.
+#         A = np.random.choice(action_candidate_array)
+#         #print(f"Chose action {A} => reward = {rewards[A]}")
+#         cumulative_rewards_received[A] = cumulative_rewards_received[A] + rewards[A]
+#         action_count[A] = action_count[A] + 1
+#         Q_estimates[A] = Q_estimates[A] + (1/action_count[A]) * (rewards[A] - Q_estimates[A])
+#         exploiting = exploiting + 1
 
-print("END")
-print(f"Q = {Q_estimates}")
-print(f"True values = {q_star}")
-print(f"(Average) Cumulative reward = {cumulative_rewards_received/steps}")
-print(f"action count = {action_count}")
-print(f"Exploited {exploiting} and explored {exploring}")
-print(f"Average reward = {np.sum(cumulative_rewards_received)/steps:.3f}")
+# print("END")
+# print(f"Q = {Q_estimates}")
+# print(f"True values = {q_star}")
+# print(f"(Average) Cumulative reward = {cumulative_rewards_received/steps}")
+# print(f"action count = {action_count}")
+# print(f"Exploited {exploiting} and explored {exploring}")
+# print(f"Average reward = {np.sum(cumulative_rewards_received)/steps:.3f}")
