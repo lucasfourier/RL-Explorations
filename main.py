@@ -48,8 +48,8 @@ steps = 2000
 
 # Just to count the number of times it exploited/explored.
 
-exploring = 0
-exploiting = 0
+exploring = agent.get_exploring_count()
+exploiting = agent.get_exploit_count()
 
 for i in range(steps):
     # Play!

@@ -15,6 +15,9 @@ class Agent:
         self.action_count = np.zeros(num_actions)
         self.cumulative_rewards_received = np.zeros(num_actions)
         self.epsilon = epsilon
+        self.steps = steps
+        self.exploring = 0
+        self.exploiting = 0
 
     def get_Q_estimates(self) -> np.ndarray:
         """Returns Q np.ndarray
@@ -41,6 +44,22 @@ class Agent:
             np.ndarray: _description_
         """
         return self.cumulative_rewards_received
+    
+    def get_exploring_count(self) -> int:
+        """Returns the amount of times the agent explored.
+
+        Returns:
+            int: Amount of times agent explored.
+        """
+        return self.exploring
+    
+    def get_exploit_count(self) -> int:
+        """Returns the amount of times the agent exploited.
+
+        Returns:
+            int: Amount of times the agent exploited.
+        """
+        return self.exploiting
     
     def compute_index_candidate_action(self, Q_estimates) -> np.ndarray:
         """Computes the INDEX such that Q() is maximal.
