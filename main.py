@@ -51,6 +51,11 @@ steps = 2000
 exploring = agent.get_exploring_count()
 exploiting = agent.get_exploit_count()
 
+####Prototype
+#
+
+###
+
 for i in range(steps):
     # Play!
     # Rewards are updated each time.

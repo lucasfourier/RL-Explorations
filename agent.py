@@ -45,6 +45,14 @@ class Agent:
         """
         return self.cumulative_rewards_received
     
+    def get_steps(self) -> int:
+        """Returns the amount of steps the agent will take.
+
+        Returns:
+            int: number of iterations with the bandit machine.
+        """
+        return self.steps
+    
     def get_exploring_count(self) -> int:
         """Returns the amount of times the agent explored.
 
