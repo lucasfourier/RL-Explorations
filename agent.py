@@ -102,6 +102,10 @@ class Agent:
             epsilon (float, optional): threshold for exploration/exploitation. Defaults to 0.1.
             number_of_arms (int, optional): Number of actions. Defaults to 10.
             rewards (np.ndarray, optional): rewards at some time t. Defaults to np.zeros(10).
+
+        "epsilon-greedy": This method alternates between choosing the action with the
+        highest estimated value and sometimes exploring alternative actions with probability
+        epsilon.
         """
         self.epsilon = epsilon
         if method == "epsilon-greedy":
