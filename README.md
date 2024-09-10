@@ -6,6 +6,14 @@ Of course, the first implementation is just a quick naive one of the multi-armed
 
 Foundational concepts are based off Sutton's Reinforcement Learning book.
 
+## The simulation
+
+The repository contains three python modules which together simulate the dynamics of the multi-armed bandit problem. 
+
+## Mathematical estimates
+
+This sections aims to explore the simulation data in order to present some mathematical estimates and explanations behind some numbers the simulation presents.
+
 ## Action-Value methods
 
 ### Average reward method
