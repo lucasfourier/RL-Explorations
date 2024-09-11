@@ -13,6 +13,18 @@ class Bandit:
         self.true_value_actions = np.zeros(num_actions)
         self.rewards = np.zeros(num_actions)
 
+    def fill_true_action_values_uniform(self, low = -1, high = 1) -> None:
+        """The true values q*(a) here of each of the actions are
+        selected according to an uniform distribution from -1 to 1.
+
+        Args:
+            low (int, optional): lower bound of uniform distribution. Defaults to -1.
+            high (int, optional): upper bound of uniform distribution. Defaults to 1.
+        """
+        for a in range(self.num_actions):
+            self.true_value_actions[a] = np.random.uniform(low, high)
+
+
     def fill_true_action_values(self, mean=0, standard_deviation=1) -> None:
         """The true value q*(a) of each of the actions was selected
         according to a normal distribution with mean zero and unit
