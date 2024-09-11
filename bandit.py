@@ -24,6 +24,17 @@ class Bandit:
         for a in range(self.num_actions):
             self.true_value_actions[a] = np.random.uniform(low, high)
 
+    def fill_reward_values_uniform(self, true_value_actions: np.ndarray) -> None:
+        """Actual rewards were selected according to an uniform
+        distribution with low = q*(a) - 0.1 and high = q*(a) + 0.1
+        #TODO: CHECK BOUNDS and provide meaning for those bounds.
+
+        Args:
+            true_value_actions (np.ndarray): Actual q*, true value of action.
+        """
+
+        for a in range(self.num_actions):
+            self.rewards[a] = np.random.uniform(true_value_actions[a] - 0.1, true_value_actions[a] + 0.1)
 
     def fill_true_action_values(self, mean=0, standard_deviation=1) -> None:
         """The true value q*(a) of each of the actions was selected
