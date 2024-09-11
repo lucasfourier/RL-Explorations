@@ -51,7 +51,6 @@ steps = 2000
 exploring = agent.get_exploring_count()
 exploiting = agent.get_exploit_count()
 
-####Prototype
 for i in range(2000):
     bandit.fill_reward_values(q_star)
     rewards = bandit.get_reward_values()
