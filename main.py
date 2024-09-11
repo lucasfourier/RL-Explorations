@@ -12,12 +12,14 @@ bandit = Bandit(number_of_arms)
 # Filling/computing q*(a), for each 'a'. Bandit Intrinsic.
 # Remember that: q*(a) = True value of an action.
 
-bandit.fill_true_action_values(0, 1)
+#bandit.fill_true_action_values(0, 1)
+bandit.fill_true_action_values_uniform(-1, 1)
 q_star = bandit.get_action_values()
 
 # Filling/computing rewards of each action. 
 
-bandit.fill_reward_values(q_star)
+#bandit.fill_reward_values(q_star)
+bandit.fill_reward_values_uniform(q_star)
 rewards = bandit.get_reward_values()
 
 ### Prototype
@@ -60,7 +62,13 @@ for i in range(2000):
 print("END")
 print(f"Q = {agent.get_Q_estimates()}")
 print(f"True values = {q_star}")
+print(f"True values (mean) = {np.sum(q_star)/10}")
 print(f"(Average) Cumulative reward = {agent.get_cumulative_rewards()/2000}")
 print(f"action count = {agent.get_action_count()}")
 print(f"Exploited {agent.get_exploit_count()} and explored {agent.get_exploring_count()}")
 print(f"Average reward = {np.sum(agent.get_cumulative_rewards())/2000:.3f}")
+
+
+
+plt.hist(q_star)
+plt.show()
