@@ -54,32 +54,55 @@ epsilon_list = []
 exploring = agent.get_exploring_count()
 exploiting = agent.get_exploit_count()
 
-for epsilon in [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]:
+for i in range(steps):
+    bandit.fill_reward_values(q_star)
+    rewards = bandit.get_reward_values()
 
-    epsilon_list.append(epsilon)
-    i = 0
-    agent.set_zero_exploit_count()
-    agent.set_zero_explore_count()
-    agent.set_zero_cumulative_rewards()
-    agent.set_zero_action_count()
+    agent.action_method("epsilon-greedy", epsilon, number_of_arms, rewards)
 
-    for i in range(steps):
-        bandit.fill_reward_values(q_star)
-        rewards = bandit.get_reward_values()
+print(f"Q = {agent.get_Q_estimates()}")
+print(f"q = {q_star}")
+print(f"-> (Average) Cumulative reward = {agent.get_cumulative_rewards()/steps}")
+print(f"-> action count = {agent.get_action_count()}")
+print(f"-> Exploited {agent.get_exploit_count()} and explored {agent.get_exploring_count()}")
+print(f"-> Average reward = {np.sum(agent.get_cumulative_rewards())/steps:.3f}\n")
 
-        agent.action_method("epsilon-greedy", epsilon, number_of_arms, rewards)
+average_reward.append(np.sum(agent.get_cumulative_rewards())/steps)
+print(f"(Average reward, epsilon) = {np.sum(agent.get_cumulative_rewards())/steps:.3f}, {epsilon}")
 
-    print(f"Q = {agent.get_Q_estimates()}")
-    print(f"-> (Average) Cumulative reward = {agent.get_cumulative_rewards()/steps}")
-    print(f"-> action count = {agent.get_action_count()}")
-    print(f"-> Exploited {agent.get_exploit_count()} and explored {agent.get_exploring_count()}")
-    print(f"-> Average reward = {np.sum(agent.get_cumulative_rewards())/steps:.3f}\n")
+# Prototype analysis.
 
-    average_reward.append(np.sum(agent.get_cumulative_rewards())/steps)
-    print(f"(Average reward, epsilon) = {np.sum(agent.get_cumulative_rewards())/steps:.3f}, {epsilon}")
+# exploring = agent.get_exploring_count()
+# exploiting = agent.get_exploit_count()
+
+# for epsilon in [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]:
+
+#     epsilon_list.append(epsilon)
+#     i = 0
+#     agent.set_zero_exploit_count()
+#     agent.set_zero_explore_count()
+#     agent.set_zero_cumulative_rewards()
+#     agent.set_zero_action_count()
+
+#     for i in range(steps):
+#         bandit.fill_reward_values(q_star)
+#         rewards = bandit.get_reward_values()
+
+#         agent.action_method("epsilon-greedy", epsilon, number_of_arms, rewards)
+
+#     print(f"Q = {agent.get_Q_estimates()}")
+#     print(f"-> (Average) Cumulative reward = {agent.get_cumulative_rewards()/steps}")
+#     print(f"-> action count = {agent.get_action_count()}")
+#     print(f"-> Exploited {agent.get_exploit_count()} and explored {agent.get_exploring_count()}")
+#     print(f"-> Average reward = {np.sum(agent.get_cumulative_rewards())/steps:.3f}\n")
+
+#     average_reward.append(np.sum(agent.get_cumulative_rewards())/steps)
+#     print(f"(Average reward, epsilon) = {np.sum(agent.get_cumulative_rewards())/steps:.3f}, {epsilon}")
 
 
-plt.plot(epsilon_list, average_reward)
-plt.xlabel("Epsilon")
-plt.ylabel("Average reward")
-plt.show()
+# plt.plot(epsilon_list, average_reward)
+# plt.xlabel("Epsilon")
+# plt.ylabel("Average reward")
+# plt.show()
+
+#########
