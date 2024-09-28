@@ -72,6 +72,32 @@ class Agent:
         """
         return self.exploiting
     
+    def set_zero_exploit_count(self) -> None:
+        """
+        Sets the exploit index to zero
+        """
+        self.exploiting = 0
+
+    def set_zero_explore_count(self) -> None:
+        """
+        Sets the explore index to zero
+        """
+        self.exploring = 0
+
+    def set_zero_cumulative_rewards(self) -> None:
+        """
+        Sets the cumulative rewards attribute to zero.
+        """
+        for i in range(len(self.cumulative_rewards_received)):
+            self.cumulative_rewards_received[i] = 0
+
+    def set_zero_action_count(self) -> None:
+        """
+        Sets the action count to zero.
+        """
+        for i in range(len(self.action_count)):
+            self.action_count[i] = 0
+    
     def compute_index_candidate_action(self, Q_estimates) -> np.ndarray:
         """Computes the INDEX such that Q() is maximal.
 
